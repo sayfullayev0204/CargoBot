@@ -11,7 +11,7 @@ class TelegramUser(models.Model):
     profile_photo = models.ImageField(upload_to='profiles', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self) -> str:
-        return self.username
+        return self.first_name
 
 class Role(models.Model):
     name = models.CharField(max_length=255)
