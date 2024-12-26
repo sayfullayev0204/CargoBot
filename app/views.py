@@ -57,12 +57,15 @@ def index(request):
         country_1_id = request.POST.get("country_1")
 
         if country_id and country_1_id:
+            country = Country.objects.get(id=country_id)
+            country_1 = Country.objects.get(id=country_1_id)
             if country_id == country_1_id:
                 messages.error(
                 request,
                 mark_safe("Ikki mamlakat bir xil bo'lishi mumkin emas❗<br>Turli mamlakat tanlang")
                 )
-
+            elif "UZ 🇺🇿 UZBEKISTAN" not in (country.name, country_1.name):
+                messages.error(request, "Biz faqat O'zbekiston bilan boshqa davlatlar o'rtasida jo'natmalarni amalga oshira olamiz❗")
             else:
                 request.session['country'] = country_id
                 request.session['country_1'] = country_1_id
