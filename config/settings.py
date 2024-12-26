@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-les6w@8xc)*oj5u^3gpvov(eu8u_7htxjh**r=%3)-m%=iuo0a
 DEBUG = True
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://34c4-37-110-210-71.ngrok-free.app',
+    'https://cargobot-production.up.railway.app',
 ]
 
 ALLOWED_HOSTS = ["*"]
