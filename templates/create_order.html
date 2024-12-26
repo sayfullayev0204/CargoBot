@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Yaratish</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"/>
+      
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'create.css' %}">
+  </head>
+  <body>
+    <header class="header">
+      <div class="head" style="justify-content: space-between; padding: 15px;">
+        <div>
+          <h4>
+            <a style="text-decoration: none; color: white;" href="{% url 'home' %}" onclick="showLoader()">
+              <i style="color: white" class="fas fa-arrow-left"></i> Ortga qaytish
+            </a>
+          </h4>
+        </div>
+        
+        <div class="end">
+          <h4 style="color: #ccc;"> {{ telegram_user.first_name }}</h4>
+        </div>
+      </div>
+    </header>
+    <style>
+      body{
+    font-family: 'Cormorant-700', serif;
+  }
+  </style>
+  <div id="loader" class="loader">
+    <div class="spinner"></div>
+  </div>
+    <div class="container mt-5">
+        <h1 class="text-center">Order Yaratish</h1>
+        <p class="text-center">Tanlangan E'lon turi: <strong>{{ role.name }}</strong></p>
+        <form method="POST" onsubmit="showLoader()">
+          {% csrf_token %}
+          <p>{{ countries.0.name }}dan</p> 
+          <p>{{ countries.1.name }}ga</p>
+      
+          <label for="role">E'lon turi:</label>
+          <select name="role" required>
+              <option value="">E'lon turini tanlang</option>
+              {% for role in roles %}
+              <option value="{{ role.id }}">{{ role.name }}</option>
+              {% endfor %}
+          </select>
+      
+          <label for="center">Airoport:</label>
+          <select name="center" required>
+              <option value="">Airoportni tanlang</option>
+              {% for center in centers %}
+              <option value="{{ center.id }}">{{ center.name }}</option>
+              {% endfor %}
+          </select>
+      
+          <label for="category">Bagaj:</label>
+          <select name="category" required>
+              <option value="">Bagajni tanlang</option>
+              {% for category in categories %}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+          </select>
+      
+          <label for="date">Sana:</label>
+          <input style="width: 100%;padding: 10px;border: 1px solid #007bff;border-radius: 4px;box-sizing: border-box;" type="date" name="date" required>
+      
+          <label for="name">Ismingiz:</label>
+          <input type="text" placeholder="Masalan: Alibek" name="name" required>
+      
+          <label for="description">Izoh:</label>
+          <textarea name="description" placeholder="Qisqacha izoh" required></textarea>
+      
+          <label for="price">Narx:</label>
+          <input type="text" name="price" placeholder="Masalan: 100 000 so'm" required>
+      
+          <label for="phone">Telefon raqam:</label>
+          <input type="text" name="phone" placeholder="Masalan: 913205060" required> <br> <br>
+      
+          <button type="submit">Saqlash</button>
+      </form>
+    </div>
+    <footer class="footer">
+        <div class="mobile-footer">
+          <a onclick="changeStyle('home')" id="home" href="{% url 'home' %}">
+            <i style="color: #658b54;" class="fas fa-home"></i>
+            <br />
+            Bosh sahifa
+          </a>
+          <a onclick="changeStyle('posts')" id="posts" href="{% url 'my_posts' %}">
+            <i class="fas fa-list"></i>
+            <br />
+            E'lonlarim
+          </a>
+          <a onclick="changeStyle('msg')" id="msg" href="{% url 'my_profile' %}">
+            <i class="fas fa-user"></i>
+            <br />
+            Profilim
+          </a>
+        </div>
+        </div>
+      </footer>
+  
+</body>
+</html>
+<script>
+  // Function to show the loader
+  function showLoader() {
+    const loader = document.getElementById("loader");
+    if (loader) {
+      loader.style.display = "flex";
+    }
+  }
+
+  // Hide the loader after DOM content is fully loaded
+  document.addEventListener("DOMContentLoaded", function () {
+    const loader = document.getElementById("loader");
+    if (loader) {
+      loader.style.display = "none";
+    }
+
+    // Attach the loader display to footer navigation links
+    const footerLinks = document.querySelectorAll(".mobile-footer a");
+    footerLinks.forEach((link) => {
+      link.addEventListener("click", function (event) {
+        showLoader();
+      });
+    });
+  });
+</script>
